@@ -28,16 +28,26 @@
 
 完整的迁移文档位于 `docs/` 目录：
 
-### 必读文档
+### 🚀 快速入口
+- **[快速开始](./docs/QUICK_START.md)** ⚡ - 快速了解项目现状和下一步
+- **[迁移进度](./docs/MIGRATION_PROGRESS.md)** 📊 - 查看当前进度和待办事项
+- **[UI 布局参考](./docs/Game-Layout-Reference.md)** 🎨 - 完整的界面设计参考
+
+### 📖 系统文档
 1. **[迁移总览](./docs/01_迁移总览.md)** - 从这里开始！
 2. **[环境准备](./docs/02_环境准备.md)** - Cocos Creator 安装配置
 3. **[项目结构设计](./docs/03_项目结构设计.md)** - 目录组织和场景设计
 4. **[资源迁移指南](./docs/04_资源迁移指南.md)** - 单词库、音频、图片迁移
 5. **[核心逻辑迁移](./docs/05_核心逻辑迁移.md)** - 游戏代码迁移
+6. **[渲染系统改造](./docs/06_渲染系统改造.md)** - Canvas 到节点系统
+7. **[UI 系统重建](./docs/07_UI系统重建.md)** - DOM 到 Cocos UI
+8. **[音频系统适配](./docs/08_音频系统适配.md)** - TTS 和音频缓存
+9. **[测试验证清单](./docs/09_测试验证清单.md)** - 完整测试方案
+10. **[常见问题FAQ](./docs/10_常见问题FAQ.md)** - 故障排查
 
-### 辅助文档
-- **[README](./docs/README.md)** - 文档索引
-- **[快速参考](./docs/快速参考.md)** - 常用代码和API速查
+### 🔧 辅助文档
+- **[文档索引](./docs/README.md)** - 完整文档列表
+- **[快速参考](./docs/快速参考.md)** - 常用代码和 API 速查
 
 ---
 
@@ -95,13 +105,21 @@ proj-cocos/
 ├── temp/                   # 临时文件（自动生成）
 │
 ├── docs/                   # 迁移文档
-│   ├── 01_迁移总览.md
-│   ├── 02_环境准备.md
-│   ├── 03_项目结构设计.md
-│   ├── 04_资源迁移指南.md
-│   ├── 05_核心逻辑迁移.md
-│   ├── README.md
-│   └── 快速参考.md
+│   ├── 01_迁移总览.md     # 迁移路线图
+│   ├── 02_环境准备.md     # 环境配置
+│   ├── 03_项目结构设计.md  # 目录组织
+│   ├── 04_资源迁移指南.md  # 资源处理
+│   ├── 05_核心逻辑迁移.md  # 代码迁移
+│   ├── 06_渲染系统改造.md  # 渲染系统
+│   ├── 07_UI系统重建.md   # UI 系统
+│   ├── 08_音频系统适配.md  # 音频系统
+│   ├── 09_测试验证清单.md  # 测试方案
+│   ├── 10_常见问题FAQ.md  # 问题排查
+│   ├── QUICK_START.md     # 快速开始 ⚡
+│   ├── MIGRATION_PROGRESS.md  # 进度跟踪 📊
+│   ├── Game-Layout-Reference.md  # UI 布局 🎨
+│   ├── README.md          # 文档索引
+│   └── 快速参考.md         # API 速查
 │
 ├── package.json            # npm 依赖配置
 ├── tsconfig.json           # TypeScript 配置
@@ -267,6 +285,14 @@ proj-cocos/
 
 ## 📝 更新日志
 
+### 2025-10-23
+- ✅ 完成主界面移植到 proj-cocos
+- ✅ 创建完整目录结构
+- ✅ 创建核心脚本框架（GameManager, GameConfig）
+- ✅ 创建类型定义（Word, GameState）
+- ✅ 创建参考文档（UI 布局、迁移进度、快速开始）
+- ✅ 所有说明文档迁移到 docs/
+
 ### 2025-10-22
 - ✅ 创建 Cocos Creator 项目
 - ✅ 完成迁移文档编写
@@ -276,4 +302,6 @@ proj-cocos/
 
 **开始你的 Cocos Creator 开发之旅！** 🚀
 
-📖 从这里开始：[docs/01_迁移总览.md](./docs/01_迁移总览.md)
+⚡ 快速了解项目：[docs/QUICK_START.md](./docs/QUICK_START.md)  
+📊 查看迁移进度：[docs/MIGRATION_PROGRESS.md](./docs/MIGRATION_PROGRESS.md)  
+📖 系统学习迁移：[docs/01_迁移总览.md](./docs/01_迁移总览.md)

@@ -1,0 +1,377 @@
+# Word Tetris Cocos Creator 项目开发规则
+
+## 📋 项目概述
+
+本项目是将 Word Tetris 游戏从 HTML5 Canvas 版本（`../proj/`）迁移到 Cocos Creator 版本的工程。
+
+---
+
+## 📁 文档管理规则
+
+### 1. 文档存放位置
+
+**唯一位置**：`proj-cocos/docs/`
+
+所有说明性文档、技术文档、参考文档必须统一存放在 `docs/` 目录下，禁止在其他位置创建 `.md` 文档。
+
+### 2. 文档分类和合并原则
+
+**原则**：相同类型的文档内容合并到同一个 md 文件中，避免文档碎片化。
+
+#### 已有文档分类：
+
+```
+docs/
+├── README.md                      # 📚 文档索引（总入口）
+├── QUICK_START.md                 # ⚡ 快速开始指南
+├── MIGRATION_PROGRESS.md          # 📊 迁移进度跟踪
+├── Game-Layout-Reference.md       # 🎨 UI 布局参考
+│
+├── 01_迁移总览.md                 # 📖 迁移路线图和技术对比
+├── 02_环境准备.md                 # 🔧 环境配置和工具安装
+├── 03_项目结构设计.md             # 📂 目录组织和场景设计
+├── 04_资源迁移指南.md             # 📦 单词库、音频、图片迁移
+├── 05_核心逻辑迁移.md             # 💻 游戏代码迁移方案
+├── 06_渲染系统改造.md             # 🎨 Canvas 到节点系统
+├── 07_UI系统重建.md               # 🖼️ DOM 到 Cocos UI
+├── 08_音频系统适配.md             # 🔊 TTS 和音频缓存
+├── 09_测试验证清单.md             # ✅ 测试方案和用例
+├── 10_常见问题FAQ.md              # ❓ 故障排查和解决方案
+└── 快速参考.md                    # 🔍 API 速查和代码片段
+```
+
+### 3. 新增文档规范
+
+#### 3.1 新增文档前的检查
+
+在创建新文档前，必须先检查：
+1. 是否可以合并到现有文档？
+2. 是否属于现有文档的子章节？
+3. 内容是否足够独立和重要到需要单独文档？
+
+#### 3.2 文档合并规则
+
+| 内容类型 | 合并到 |
+|---------|--------|
+| API 使用说明 | `快速参考.md` |
+| 常见错误和解决方案 | `10_常见问题FAQ.md` |
+| 测试用例和验证步骤 | `09_测试验证清单.md` |
+| 项目进度和任务清单 | `MIGRATION_PROGRESS.md` |
+| UI 设计和布局说明 | `Game-Layout-Reference.md` |
+| 环境配置问题 | `02_环境准备.md` |
+| 代码迁移步骤 | `05_核心逻辑迁移.md` |
+
+#### 3.3 允许创建新文档的情况
+
+只有以下情况才可以创建新的独立文档：
+- ✅ 新的功能模块（如：新系统、新工具）
+- ✅ 大型重构说明（如：架构升级）
+- ✅ 发布和部署指南
+- ✅ 性能优化专题
+- ❌ 禁止：临时笔记、草稿、实验性内容
+
+### 4. 文档命名规范
+
+- **系统文档**：`NN_描述.md`（如：`11_性能优化.md`）
+- **参考文档**：`描述-Reference.md`（如：`API-Reference.md`）
+- **专题文档**：`描述.md`（如：`DEPLOYMENT.md`）
+- **禁止使用**：日期、临时、草稿、test 等字样
+
+### 5. 文档内容规范
+
+#### 5.1 必须包含的部分
+```markdown
+# 文档标题
+
+> 一句话说明文档用途
+
+## 📋 本文档内容
+- 列表项 1
+- 列表项 2
+
+## 主要内容章节...
+
+---
+**最后更新**: YYYY-MM-DD
+```
+
+#### 5.2 禁止的内容
+- ❌ 临时笔记和草稿
+- ❌ 已过时的信息
+- ❌ 重复的内容
+- ❌ 代码实现细节（应写在代码注释中）
+
+---
+
+## 🎯 设计文档约束
+
+### 唯一权威
+`../../word_tetris_game_design.md` 是唯一的功能设计权威文档。
+
+### 实现要求
+所有实现必须 100% 遵循设计文档，包括：
+- ✅ 功能逻辑
+- ✅ 视觉效果
+- ✅ 动画表现
+- ✅ 交互方式
+- ✅ UI 布局
+
+### 禁止行为
+- ❌ 不看设计文档就开始实现
+- ❌ 用"类似"方案替代明确要求
+- ❌ 只实现功能逻辑，忽略视觉效果
+- ❌ 简化动画效果
+- ❌ 自作主张修改设计要求
+- ❌ 未经用户同意随意创建文档
+
+---
+
+## 💻 代码开发规则
+
+### 1. TypeScript 规范
+
+#### 1.1 类型注解
+```typescript
+// ✅ 正确：明确类型
+private score: number = 0;
+private words: WordData[] = [];
+
+// ❌ 错误：缺少类型
+private score = 0;
+private words = [];
+```
+
+#### 1.2 组件装饰器
+```typescript
+// ✅ 正确：使用装饰器
+import { _decorator, Component, Node } from 'cc';
+const { ccclass, property } = _decorator;
+
+@ccclass('GameManager')
+export class GameManager extends Component {
+    @property(Node)
+    targetNode: Node = null;
+}
+
+// ❌ 错误：不使用装饰器
+class GameManager {
+    targetNode: Node = null;
+}
+```
+
+#### 1.3 接口和枚举
+```typescript
+// ✅ 正确：使用接口定义数据结构
+export interface WordData {
+    word: string;
+    phonetic: string;
+}
+
+// ✅ 正确：使用枚举定义状态
+export enum GameState {
+    Playing = 'playing',
+    Paused = 'paused'
+}
+```
+
+### 2. 文件组织规范
+
+#### 2.1 脚本分类
+```
+assets/scripts/
+├── core/          # 核心游戏逻辑（GameManager, WordManager 等）
+├── systems/       # 游戏系统（Cannon, Explosion, Renderer）
+├── entities/      # 游戏实体（Word, Bullet, Fuse）
+├── ui/            # UI 组件（GameUI, Modal, Panel）
+├── utils/         # 工具类（TTS, Audio, Logger）
+├── config/        # 配置文件（GameConfig, R2Config）
+└── types/         # 类型定义（Word, GameState）
+```
+
+#### 2.2 命名规范
+- **类文件**：PascalCase（如：`GameManager.ts`）
+- **接口**：PascalCase + Interface 后缀（如：`WordData`）
+- **枚举**：PascalCase（如：`GameState`）
+- **变量**：camelCase（如：`currentWord`）
+- **常量**：UPPER_SNAKE_CASE（如：`MAX_SPEED`）
+
+### 3. 注释规范
+
+#### 3.1 必须添加注释的地方
+```typescript
+/**
+ * 游戏主控制器
+ * 负责游戏流程控制、状态管理、模块协调
+ */
+@ccclass('GameManager')
+export class GameManager extends Component {
+    /**
+     * 开始游戏
+     * @param mode 游戏模式（休闲/挑战）
+     */
+    public startGame(mode: GameMode): void {
+        // 实现逻辑
+    }
+}
+```
+
+#### 3.2 注释语言
+- 优先使用中文注释（项目团队语言）
+- API 文档可使用英文
+- 关键算法需要详细说明
+
+---
+
+## 📦 资源管理规则
+
+### 1. 资源分类
+
+```
+assets/
+├── resources/              # 动态加载资源（运行时加载）
+│   ├── words/             # 单词库 JSON
+│   ├── audio/             # 音频文件（可能使用 R2）
+│   └── images/            # 图片资源（可能使用 R2）
+│
+├── textures/              # 纹理资源（编辑器引用）
+│   ├── ui/                # UI 纹理
+│   └── sprites/           # 精灵图
+│
+└── prefabs/               # 预制体
+    ├── entities/          # 实体预制体
+    ├── ui/                # UI 预制体
+    └── effects/           # 特效预制体
+```
+
+### 2. 资源命名
+
+- **图片**：kebab-case（如：`word-background.png`）
+- **音频**：kebab-case（如：`hello_baidu.mp3`）
+- **预制体**：PascalCase（如：`Word.prefab`）
+- **场景**：PascalCase（如：`Game.scene`）
+
+### 3. 资源引用
+
+```typescript
+// ✅ 正确：动态加载
+resources.load('words/day01', JsonAsset, (err, asset) => {
+    if (!err) {
+        const words = asset.json;
+    }
+});
+
+// ✅ 正确：编辑器引用
+@property(Prefab)
+wordPrefab: Prefab = null;
+```
+
+---
+
+## 🔍 调试和日志规则
+
+### 1. 日志级别
+
+```typescript
+// ✅ 使用统一的日志系统
+debugLog.info('游戏开始');
+debugLog.warning('单词库加载慢');
+debugLog.error('资源加载失败', error);
+debugLog.success('关卡完成');
+
+// ❌ 禁止直接使用 console
+console.log('test'); // 不要这样做
+```
+
+### 2. 日志内容规范
+
+```typescript
+// ✅ 正确：清晰的日志
+debugLog.info('🎮 游戏开始', { mode: 'casual', level: 1 });
+
+// ❌ 错误：模糊的日志
+debugLog.info('start');
+```
+
+---
+
+## ✅ Git 提交规则
+
+### 1. 提交信息格式
+
+```
+<类型>: <简短描述>
+
+<详细说明>（可选）
+
+<相关 Issue>（可选）
+```
+
+### 2. 类型标签
+
+- `feat`: 新功能
+- `fix`: 修复 bug
+- `docs`: 文档更新
+- `style`: 代码格式（不影响功能）
+- `refactor`: 重构
+- `test`: 测试
+- `chore`: 构建/工具配置
+
+### 3. 示例
+
+```bash
+feat: 实现炮管自动瞄准系统
+
+- 添加 CannonSystem.ts
+- 实现平滑瞄准算法
+- 添加后坐力动画
+
+refs #123
+```
+
+---
+
+## 🚫 禁止行为总结
+
+### 文档相关
+- ❌ 在 docs/ 外创建 .md 文件
+- ❌ 创建过多碎片化文档
+- ❌ 创建临时笔记文档
+- ❌ 文档内容重复
+
+### 代码相关
+- ❌ 不遵循设计文档
+- ❌ 简化视觉效果
+- ❌ 缺少类型注解
+- ❌ 不使用装饰器
+- ❌ 直接使用 console.log
+
+### 资源相关
+- ❌ 资源命名不规范
+- ❌ 资源分类混乱
+- ❌ 未使用对象池优化
+
+---
+
+## 📚 参考文档优先级
+
+1. **设计文档**（唯一权威）: `../../word_tetris_game_design.md`
+2. **快速开始**: `docs/QUICK_START.md`
+3. **迁移进度**: `docs/MIGRATION_PROGRESS.md`
+4. **系统文档**: `docs/01_迁移总览.md` ~ `10_常见问题FAQ.md`
+5. **快速参考**: `docs/快速参考.md`
+
+---
+
+## 🎯 核心原则
+
+1. **文档集中管理** - 所有文档在 `docs/`
+2. **内容合并优先** - 相同类型合并到同一文档
+3. **设计文档权威** - 100% 遵循设计要求
+4. **类型安全优先** - 使用 TypeScript 类型系统
+5. **代码质量优先** - 清晰、可维护、有注释
+6. **资源规范管理** - 分类清晰、命名规范
+
+---
+
+**遵循这些规则，保持项目整洁和高质量！** ✨
+
